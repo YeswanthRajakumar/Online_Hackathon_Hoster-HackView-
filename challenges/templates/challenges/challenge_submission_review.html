@@ -1,0 +1,74 @@
+{% extends 'challenges/base.html' %}
+{% load crispy_forms_filters %}
+{% load static %}
+{% block head %}
+   <title>Submission List </title>
+{% endblock %}
+
+
+{% block content %}
+
+    <div class="all-content container mb-5 mt-5" style="background-color: #fafafa" >
+         <h2>Review Submission</h2>
+        <div class="row" style="display: inline">
+            <h4>Submitted by </h4><p>{{ submission.applyer }}</p>
+        </div>
+        <div class="row p-2">
+
+            <div class="container qa1">
+                <h3> 1.Can you describe the problem in your own words exactly how you experience it ? </h3>
+                <div class="row p-3" style="background-color: white">
+                    {{ submission.qa1 }}
+                 </div>
+             </div>
+
+            <div class="container qa2">
+                <h3> 2.How have you tried to solve this problem before? Can you explain the solution ? </h3>
+                <div class="row p-3" style="background-color: white">
+                    {{ submission.qa2 }}
+                 </div>
+             </div>
+
+        <div class="container qa3">
+                <h3>3.Why did you not make tht solution permanent?What were the gaps in the solution ?</h3>
+                <div class="row p-3" style="background-color: white">
+                    {{ submission.qa3 }}
+                 </div>
+             </div>
+
+            <div class="container qa4">
+                <h3>4.What are the other constraints?challenges that have to be overcome or accommodated while '
+                         'solving the problem?</h3>
+                <div class="row p-3" style="background-color: white">
+                    {{ submission.qa4 }}
+                 </div>
+             </div>
+
+            <div class="container qa5">
+                <h3>5.How will you benefit from solving the problem?How much is solving this problem worth to you ?</h3>
+                <div class="row p-3" style="background-color: white">
+                    {{ submission.qa5 }}
+                 </div>
+             </div>
+
+             <div class="container qa6">
+                <h3>6.How important to you is solving this problem among other priorities ?</h3>
+                <div class="row p-3" style="background-color: white">
+                    {{ submission.qa6 }}
+                 </div>
+             </div>
+
+        </div>
+
+        <div class="row pl-2 mt-5 ">
+            <form action="" method="POST">
+                {% csrf_token %}
+                {{ form | crispy }}
+                <button class=" btn btn-success" type="submit"> Submit Scores </button>
+            </form>
+        </div>
+
+
+    </div>
+{% endblock %}
+

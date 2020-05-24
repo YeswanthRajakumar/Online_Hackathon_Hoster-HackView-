@@ -1,0 +1,35 @@
+{% extends 'challenges/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block head %}
+   <title>Login </title>
+{% endblock %}
+
+
+{% block content %}
+    <div class="jumbotron mt-4">
+    <h2>Login</h2>
+    <div class="mt-4 center">
+        {% if messages %}
+            {% for message in  messages %}
+            <p>{{message}}</p>
+
+            {% endfor %}
+        {% endif %}
+            <form action="" method="POST" >
+                 {% csrf_token %}
+                <label>
+                    <input  class="input-group-text " type="text" placeholder="Username" name="username">
+                </label>
+                <br>
+                <label>
+                    <input class="input-group-text" type="password" placeholder="Password" name="password">
+                </label>
+                <br>
+                <button class="btn btn-primary" type="submit"> Login  </button>
+            </form>
+             <a href="{% url 'home' %}"> don't have an account?</a>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'challenges/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block head %}
+   <title>SignUp </title>
+{% endblock %}
+
+
+{% block content %}
+    <div class="jumbotron mt-4">
+    <h2>Create a  Hoster User</h2>
+    <div class="mt-4">
+            <form action="" method="POST" enctype="multipart/form-data">
+                 {% csrf_token %}
+                {{ form | crispy }}
+                <button class="btn btn-primary" type="submit"> Sign up  </button>
+            </form>
+         <a class="mt-2" href="{% url 'user-login' %}"> Already have an account?</a>
+    </div>
+</div>
+
+{% endblock %}

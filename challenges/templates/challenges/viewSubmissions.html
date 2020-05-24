@@ -1,0 +1,33 @@
+{% extends 'challenges/base.html' %}
+{% load static %}
+{% block head %}
+   <title>Submission List </title>
+{% endblock %}
+
+
+{% block content %}
+
+    <div class="all-content container mb-5 mt-5" style="background-color: #fafafa" >
+      <h1>List of Submissions </h1>
+    <div class=" submissions container" >
+        {% for submission in submissions %}
+                <div class="container" style="border: 1px grey solid" >
+                <div class="row mt-4">
+                    <div class="col mt-3 pb-3 ">
+                        <h3>{{ submission.applyer}}</h3>
+                    </div>
+                   <div class="col mt-3 pb-3">
+
+
+                        <a href="{% url 'review-submissions' submission.id %}" class=" btn btn-success">Review</a>
+                        <a href="#" class="btn btn-info ml-2">Assign to Reviewers </a>
+                   
+                   </div>
+
+                </div>
+
+                 </div>
+        {% endfor %}
+    </div>
+    </div>
+{% endblock %}

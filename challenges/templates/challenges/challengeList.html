@@ -1,0 +1,33 @@
+{% extends 'challenges/base.html' %}
+{% load static %}
+{% block head %}
+   <title>Challenge_List</title>
+{% endblock %}
+
+
+{% block content %}
+    <h1> Challenge List </h1>
+    {% if request.user.is_staff %}
+    <div>
+         <a href="{% url 'create-challenge' %}"> Create Challenge </a>
+         <a class="ml-3" href="{% url 'my-challenges' %}"> My Challenges </a>
+    </div>
+    {% endif %}
+  <div class="row mt-5" style="background-color: #f3f3f3" >
+{% for challenge in challenges %}
+    <div class="col-sm-6 col-md-4" >
+      <div class="card mt-3 " style="border-radius: 7px;">
+        <img class="card-img-top img-fluid" src="{{ challenge.challenge_image.url }}" width="400" alt="not available">
+        <div class="card-body">
+          <h5 class="card-title "><a  class="text-decoration-none" href="{% url 'challenge-detail' challenge.id %}">{{ challenge.challenge_title }}</a></h5>
+          <h6>Hosted by {{ challenge.created_by }}</h6>
+            <p class="card-text ">{{ challenge.challenge_description | truncatechars:150 }}</p>
+        </div>
+      </div>
+    </div>
+{% endfor %}
+    </div>
+
+
+
+{% endblock %}
