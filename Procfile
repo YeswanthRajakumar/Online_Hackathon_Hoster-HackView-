@@ -1,1 +1,1 @@
-web: gunicorn HackView.wsgi
+web: gunicorn HackView.wsgi --log-file -
