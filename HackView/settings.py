@@ -14,7 +14,7 @@ SECRET_KEY = 'l)f-#81c+mpt_d6#2(!ym4rn$gkoh908sr1g1o_cle^4+j6y@f'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://hackview.herokuapp.com', '127.0.0.1']
 
 # Application definition
 
