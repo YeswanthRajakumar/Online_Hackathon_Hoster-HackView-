@@ -64,7 +64,9 @@ def CreateChallenge(request):
     if request.method == 'POST':
         form = ChallengeCreationForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            challenge = form.save(commit=False)
+            challenge.instance.created_by = request.user
+            challenge.save()
             return redirect('challenge-list')
         else:
             print(form.errors)
