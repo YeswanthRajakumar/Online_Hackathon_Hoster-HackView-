@@ -6,6 +6,7 @@ urlpatterns = [
     path('', views.index, name='home'),
     path('challenges/', views.challengeList, name='challenge-list'),
     path('myChallenges/', views.hosterMyChallenges, name='my-challenges'),
+    path('myProposals/', views.innovatorMyProposals, name='my-proposals'),
     path('challenge-detail/<int:id>/', views.challengeDetail, name='challenge-detail'),
     path('challenge-submissions/<int:id>/', views.viewChallengeSubmission, name='view-submissions'),
     path('review-submissions/<int:id>/', views.reviewSubmission, name='review-submissions'),

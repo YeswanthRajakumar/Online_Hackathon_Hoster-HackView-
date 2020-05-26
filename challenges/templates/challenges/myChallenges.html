@@ -9,6 +9,7 @@
 {% block content %}
 
      <h1>  My Challenges  </h1>
+
   <div class="row mt-5" style="background-color: #f3f3f3" >
 {% for challenge in mychallenges %}
     <div class="col-sm-6 col-md-4" >
@@ -16,7 +17,7 @@
         <img class="card-img-top img-fluid" src="{{ challenge.challenge_image.url }}" width="400"  alt="not available">
         <div class="card-body">
           <h5 class="card-title "><a  class="text-decoration-none" href="{% url 'challenge-detail' challenge.id %}">{{ challenge.challenge_title }}</a></h5>
-{#          <p class="card-text ">{{ challenge.challenge_description | truncatechars:150 }}</p>#}
+          <p class="card-text "> No.of Submissions  : <b> {{ challenge.submission_set.count}}</b></p>
         </div>
       </div>
     </div>

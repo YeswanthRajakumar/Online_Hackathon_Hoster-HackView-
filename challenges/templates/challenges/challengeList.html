@@ -12,6 +12,10 @@
          <a href="{% url 'create-challenge' %}"> Create Challenge </a>
          <a class="ml-3" href="{% url 'my-challenges' %}"> My Challenges </a>
     </div>
+        {% else %}
+        <div>
+          <a class="ml-3" href="{% url 'my-proposals' %}"> My Proposals </a>
+        </div>
     {% endif %}
   <div class="row mt-5" style="background-color: #f3f3f3" >
 {% for challenge in challenges %}

@@ -1,7 +1,9 @@
+from django.db import IntegrityError
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import QuestionForm, ChallengeCreationForm, ReviewForm
 from .models import Submission, Challenges
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib import messages
 
 
 # Create your views here.
@@ -9,7 +11,6 @@ from django.contrib.auth.decorators import login_required
 
 def index(request):
     context = {
-
     }
     return render(request, template_name='challenges/Home.html', context=context)
 
@@ -105,16 +106,15 @@ def challengeUpdate(request, id):
 @login_required(login_url='user-login')
 def viewChallengeSubmission(request, id):
     current_challenge = Challenges.objects.get(id=id)
-
-    submissions_query_set = Submission.objects.filter(challenge=current_challenge,review_status=False)
-
+    submissions_query_set = Submission.objects.filter(challenge=current_challenge, review_status=False).order_by(
+        '-submitted_at')
+    # review_score = submissions_query_set[1].
+    # print(review_score)
     context = {
         'submissions': submissions_query_set,
     }
 
     return render(request, template_name='challenges/viewSubmissions.html', context=context)
-
-
 
 
 @login_required(login_url='user-login')
@@ -127,19 +127,31 @@ def reviewSubmission(request, id):
         'form': form,
     }
     if request.method == 'POST':
-        form = ReviewForm(request.POST)
+        try:
+            form = ReviewForm(request.POST)
+            t_score = int(request.POST.get('criteria1')) + int(request.POST.get('criteria2')) + int(
+                request.POST.get('criteria3')) + int(request.POST.get('criteria4')) + int(request.POST.get('criteria5'))
+            if form.is_valid():
+                review_score = form.save(commit=False)
+                review_score.TotalScore = t_score
+                review_score.submission = current_submission
+                review_score.reviewed_by = request.user
+                review_score.submission.review_status = True
+                review_score.save()
+                return redirect('challenge-list')
+            else:
+                print(form.errors)
 
-        t_score = int(request.POST.get('criteria1')) + int(request.POST.get('criteria2')) + int(
-            request.POST.get('criteria3')) + int(request.POST.get('criteria4')) + int(request.POST.get('criteria5'))
-        if form.is_valid():
-            review_score = form.save(commit=False)
-            review_score.TotalScore = t_score
-            review_score.submission = current_submission
-            review_score.reviewed_by = request.user
-            review_score.submission.review_status = True
-            review_score.save()
-            return redirect('challenge-list')
-        else:
-            print(form.errors)
+        except IntegrityError:
+            messages.error(request, 'Already Reviewed...')
 
     return render(request, template_name='challenges/challenge_submission_review.html', context=context)
+
+
+def innovatorMyProposals(request):
+    queryset = Submission.objects.filter(applyer=request.user)
+    print(queryset)
+    context = {
+        'submissions': queryset,
+    }
+    return render(request, template_name='challenges/myProposals.html', context=context)

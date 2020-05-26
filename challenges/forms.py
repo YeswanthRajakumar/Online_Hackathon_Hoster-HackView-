@@ -6,7 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 class QuestionForm(forms.ModelForm):
     class Meta:
         model = Submission
-        exclude = ('challenge', 'applyer', 'review_status')
+        exclude = ('challenge', 'applyer', 'review_status', 'submitted_at')
 
         labels = {
             'qa1': _('1.Can you describe the problem in your own words exactly how you experience it ?'),
@@ -28,13 +28,14 @@ class ChallengeCreationForm(forms.ModelForm):
 class ReviewForm(forms.ModelForm):
     class Meta:
         model = ReviewSubmissionScore
-        fields = ['criteria1', 'criteria2', 'criteria3', 'criteria4', 'criteria5']
+        fields = ['criteria1', 'criteria2', 'criteria3', 'criteria4', 'criteria5', 'tip']
         labels = {
             'criteria1': _('Is the Problem Statement Defined Clearly ?'),
             'criteria2': _('Is the Problem Worth Solving ?'),
             'criteria3': _('Is the Chosen Target Customer(Type/Profile) Strongly Motivated to solve the Problem ?'),
             'criteria4': _('Is the Core Value Proportion Defined,Quantified And Validated ?'),
             'criteria5': _('Is the Problem Statement Defined Clearly ?'),
+            'tip': _('Any tip for submitters ? (Optional)'),
         }
 
     def __init__(self, *args, **kwargs):

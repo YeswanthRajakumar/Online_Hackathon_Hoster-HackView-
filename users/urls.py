@@ -9,4 +9,6 @@ urlpatterns = [
     path('innovator-register/', views.InnovatorUserRegisteration, name='innovator-user-registration'),
     path('login/', views.loginPage, name='user-login'),
     path('logout/', views.logoutuser, name='user-logout'),
+    path('profile/', views.myprofile, name='user-profile'),
+
 ]

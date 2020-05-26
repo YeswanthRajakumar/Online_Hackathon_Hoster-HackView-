@@ -14,7 +14,6 @@ class Challenges(models.Model):
 
 
 class Submission(models.Model):
-
     challenge = models.ForeignKey(Challenges, on_delete=models.SET_NULL, null=True)
     applyer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     qa1 = models.TextField()
@@ -23,10 +22,11 @@ class Submission(models.Model):
     qa4 = models.TextField()
     qa5 = models.TextField()
     qa6 = models.TextField()
+    submitted_at = models.DateTimeField(auto_now_add=True)
     review_status = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.challenge.challenge_title
+        return f'{self.challenge.challenge_title} by {self.applyer}'
 
 
 class ReviewSubmissionScore(models.Model):
@@ -40,7 +40,9 @@ class ReviewSubmissionScore(models.Model):
     criteria3 = models.CharField(max_length=10, choices=MARK_CHOICES, default=0)
     criteria4 = models.CharField(max_length=10, choices=MARK_CHOICES, default=0)
     criteria5 = models.CharField(max_length=10, choices=MARK_CHOICES, default=0)
+    tip = models.TextField(null=True, blank=True)
     TotalScore = models.CharField(max_length=10, null=False)
+
     reviewed_by = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
 
     def __str__(self):

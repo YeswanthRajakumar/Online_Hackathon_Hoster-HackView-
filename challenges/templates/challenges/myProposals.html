@@ -1,24 +1,30 @@
 {% extends 'challenges/base.html' %}
 {% load static %}
 {% block head %}
-   <title>Submission List </title>
+   <title>My Proposals </title>
 {% endblock %}
 
 
 {% block content %}
 
     <div class="all-content container mb-5 mt-5" style="background-color: #fafafa" >
-      <h1>List of Submissions </h1>
-    <div class=" submissions container" >
+      <h1>My Proposals</h1>
+     <div class="submissions pb-4  container"  >
         {% for submission in submissions %}
-                <div class="container mt-4" style="border: 1px grey solid" >
+                <div class="container mt-4  " style="border: 1px grey solid" >
                 <div class="row mt-4">
                     <div class="col mt-1 pb-1 ">
-                        <h3>{{ submission.applyer}}</h3>
+                        <h2> {{ submission.challenge }}</h2>
+                        <small> Reviewed by : {{ submission.reviewsubmissionscore.reviewed_by }}</small>
+                        <br>
+                        {% if submission.reviewsubmissionscore.tip == '' %}
+                         <small> No remarks and suggestions from reviewers</small>
+                        {% else %}
+                        <h4> Tip : {{ submission.reviewsubmissionscore.tip }}</h4>
+                        {% endif %}
+
                     </div>
                    <div class="col mt-1 pb-1">
-                        <a href="{% url 'review-submissions' submission.id %}" class=" btn btn-success">Review</a>
-                        <a href="#" class="btn btn-info ml-2">Assign to Reviewers </a>
                         <p>Score : {{submission.reviewsubmissionscore.TotalScore}}</p>
                         {% if submission.reviewsubmissionscore.TotalScore == '' %}
                         <p>Review_Status : "Not Reviewed"</p>
@@ -26,11 +32,9 @@
                             <p>Review_Status : "Reviewed"</p>
                         {% endif %}
                    </div>
-
                 </div>
-
                  </div>
         {% endfor %}
     </div>
-    </div>
+      </div>
 {% endblock %}

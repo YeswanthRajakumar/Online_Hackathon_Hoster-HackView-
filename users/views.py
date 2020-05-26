@@ -1,7 +1,10 @@
-from django.contrib.auth import authenticate, login ,logout
-from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import UserRegisterFormAdmin, UserRegisterFormInnovator
 from django.contrib import messages
+from .models import Profile
+from .forms import UserUpdationForm
+from django.contrib.auth.models import User
 
 
 # Create your views here.
@@ -58,3 +61,19 @@ def loginPage(request):
 def logoutuser(request):
     logout(request)
     return render(request, template_name='challenges/Home.html')
+
+
+def myprofile(request):
+    instance = request.user.profile
+    form = UserUpdationForm(instance=instance)
+    form.instance.user = request.user
+    form.instance.email = request.user.email
+    if request.method == 'POST':
+        print('profile post request <------')
+        form = UserUpdationForm(request.POST, request.FILES, instance=instance)
+        if form.is_valid():
+            form.save()
+    context = {
+        'form': form
+    }
+    return render(request, template_name='users/MyProfile.html', context=context)
