@@ -1,5 +1,6 @@
 import os
 import django_heroku
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import staticfiles
 
@@ -67,13 +68,20 @@ WSGI_APPLICATION = 'HackView.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'HACKVIEW',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'localhost',
+        'POST': '5432'
+
     }
 }
+import dj_database_url
 
-# Password validation
-# https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
+db_from_env = dj_database_url.config(conn_max_age=600)
+DATABASES['default'].update(db_from_env)
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
